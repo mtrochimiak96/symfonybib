@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+<div class="jumbotron">
+	<div class="container text-center">
+
+		<div class="container">
+
+        <h2>Publikacja artykułu</h2>
+		
+			{{ form_start(articleForm) }}
+			
+				<div class="form-group">
+					{{ form_row(articleForm.title) }}
+                </div>
+				<div class="form-group">
+					{{ form_row(articleForm.author) }}
+                </div>
+                <div class="form-group">
+					{{ form_row(articleForm.conftype) }}
+                </div>
+                <div class="form-group">
+					{{ form_row(articleForm.confvalue) }}
+                </div>
+                <div class="form-group">
+					{{ form_row(articleForm.doi) }}
+                </div>
+                <div class="form-group">
+					{{ form_row(articleForm.minipoint) }}
+                </div>
+                <div class="form-group">
+					{{ form_row(articleForm.publicdate) }}
+                </div>
+                <div class="form-group">
+					{{ form_row(articleForm.shares) }}
+                </div>
+
+				<button class="btn btn-success">Dodaj</button>
+			{{ form_end(articleForm) }}
+		</div>
+
+	</div>
+</div>
+{% endblock %}

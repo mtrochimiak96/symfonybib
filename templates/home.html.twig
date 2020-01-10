@@ -1,0 +1,119 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	{{title}}
+{% endblock %}
+{% block body %}
+<br><br>
+<div class="jumbotron">
+
+	<div class="container">
+		<h2>Wyszukiwarka artykułów</h2>
+		<div class="col-md-8 order-md-1">
+			<form action="index.php?action=article_list" method="get" class="needs-validation" novalidate>
+				<input type="hidden" name="action" value="article_list">
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label for="title">Tytuł</label>
+						<input type="text" class="form-control" name="title" placeholder="" value="" required>
+
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="name">Imię i nazwisko autora</label>
+						<input type="text" class="form-control" name="name" placeholder="" value="" required>
+					</div>
+
+					<div class="col-md-6 mb-3">
+						<label for="date_from">Data od</label>
+						<input type="date" class="form-control" name="date_from" placeholder="" value="" required>
+					</div>
+
+
+					<div class="col-md-6 mb-3">
+						<label for="date_to">Data do</label>
+						<input type="date" class="form-control" name="date_to" placeholder="" value="" required>
+					</div>
+
+					<div class="col-md-6 mb-3">
+						<label for="sel">Sortuj:</label>
+						<select class="form-control" name="sel">
+							<option value="title">Tytuł</option>
+							<option value="author">Autor</option>
+							<option value="publicdate">Data publikacji</option>
+							<option value="minipoint">Punkty</option>
+						</select>
+					</div>
+				</div>
+
+				<legend>Wybierz kolumne</legend>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" name="title_check" value="">Tytuł
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" name="author_check" value="">Autor
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" name="conference_check" value="">Konferencja
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" name="minipoint_check" value="">Punkty
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" name="publicdate_check" value="">Data publikacji
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" name="doi_check" value="">DOI
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" name="shares_check" value="">Udziały
+					</label>
+				</div>
+				<input type="submit" class="btn btn-success" value="Szukaj">
+				<input type="submit" class="btn btn-success" name="export" value="Eksportuj">
+			</div>
+		</div>
+	</form>
+	<table  class="table table-striped">
+		<tbody>
+			{% for article in articles %}
+			<tr>
+				<th scope="row">{{ article.getId() }}</th>
+				<td>{{ article.getAuthor() }}</td>
+				<td>{{ article.getTitle() }}</td>
+				<td>{{ article.getDoi() }}</td>
+				<td>{{ article.getShares() }}</td>
+				<td>{{ article.getMinipoint() }}</td>
+				<td>{{ article.getConfvalue() }}</td>
+				<td>{{ article.getPublicdate().format("Y-m-d") }}</td>
+				{% if app.user %}
+					{% if app.user.role == "admin" %}
+						<td><a href="{{ path('app_edit_article', {
+							'id': article.getId()
+						}) }}">Edytuj</a></td>
+						<td><a href="{{ path('app_delete_article', {
+							'id': article.getId()
+						}) }}">Usuń</a></td>
+					{% else %}
+						<td><a href="{{ path('app_edit_article', {
+							'id': article.getId()
+						}) }}">Edytuj</a></td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+</div>{% endblock %}

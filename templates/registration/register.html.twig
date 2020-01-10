@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="jumbotron">
+	<div class="container text-center">
+
+		<div class="container">
+			<h2>Rejestracja</h2>
+			<p>Wypełnij wszystkie pola, aby się zarejestrować
+			</p>
+			{{ form_start(registrationForm, {
+				'attr': {
+					'class': 'was-validated'
+				}
+			}) }}
+			
+				<div class="form-group">
+					{{ form_row(registrationForm.name, {
+						'attr': {
+							'class': 'form-control'
+						}
+					}) }}
+				</div>
+			
+				<div class="form-group">
+					{{ form_row(registrationForm.affiliation, {
+						'attr': {
+							'class': 'form-control'
+						}
+					}) }}
+				</div>
+			
+				<div class="form-group">
+					{{ form_row(registrationForm.email, {
+						'attr': {
+							'class': 'form-control'
+						}
+					}) }}
+				</div>
+				
+				<div class="form-group">
+					{{ form_row(registrationForm.plainPassword, {
+						'attr': {
+							'class': 'form-control'
+						}
+					})  }}
+				</div>
+				
+				{% if app.user %}
+					{% if app.user.role == "admin" %}
+						<div class="form-group">
+							{{ form_row(registrationForm.role, {
+								'attr': {
+									'class': 'form-control'
+								}
+							})  }}
+						</div>
+					{% endif %}
+				{% endif %}
+				
+
+				<button class="btn btn-success">Register</button>
+			{{ form_end(registrationForm) }}
+		</div>
+
+	</div>
+</div>
+{% endblock %}
